@@ -1,0 +1,19 @@
+services:
+  org:
+    stop_grace_period: 1s
+    image: $ORG_IMG
+    network_mode: "host"
+    working_dir: /home/user/content
+    build:
+      context: ${BUILD_CONTEXT:-.}
+      dockerfile: ${DOCKERFILE:-Dockerfile}
+      args:
+          - HOST_UID=${HOST_UID:-1000}
+          - HOST_GID=${HOST_GID:-1000}
+    environment:
+        - HOST_UID=${HOST_UID:-1000}
+        - HOST_GID=${HOST_GID:-1000}
+    volumes:
+      - ./deps:/home/user/deps
+      - ./deps/emacs:/home/user/.doom.d
+      - .:/home/user/content

@@ -1,0 +1,69 @@
+#+title: README
+
+* Rebel-Droid-AP-25
+A batteries included instance of doom emacs ready for evil.
+
+** Overview
+Rebel-Droid-AP-25 is a Docker-based environment that provides a pre-configured Doom Emacs setup with additional tools for document generation and workflow automation. This project aims to streamline the process of creating and managing documentation, particularly for projects that use org-mode and require conversion to other formats like Hugo-compatible Markdown.
+
+** Features
+- Doom Emacs with evil mode
+- Org-mode export capabilities
+- PlantUML integration
+- Docker-based for easy deployment and consistency across environments
+- Helper script for common operations
+
+** Requirements
+- Docker
+- Docker Compose
+
+** Quick Start
+1. Clone the repository
+2. Run `./run docker-build` to build the Docker image (or pull down the image with `docker pull ghcr.io/reggiemarr/rebel-droid-ap-25:latest`)
+3. Use `./run exec-babel README.org` to test executing codeblocks in this file.
+
+** Usage
+The `run` script provides several commands:
+
+- `docker-build`: Build the Docker image
+- `exec-babel`: Generate Hugo Markdown from org files
+- `inspect`: Run a container interactively for debugging
+
+Use `./run --help` for more information on available commands and options.
+
+** Workflow Example
+Here's a PlantUML diagram illustrating a typical workflow using Rebel-Droid-AP-25:
+
+#+begin_src plantuml :tangle .org_out/workflow.plantuml :file .org_out/workflow.svg
+@startuml
+actor User
+participant "Rebel-Droid-AP-25" as RDA
+database "Git Repository" as Git
+participant "CI/CD Pipeline" as CI
+
+User -> RDA: Write documentation in org-mode
+User -> Git: Commit and push changes
+Git -> CI: Trigger build
+CI -> CI: Exec org files and export assets
+CI -> CI: Deploy to web server
+@enduml
+#+end_src
+
+#+RESULTS:
+[[file:.org_out/workflow.svg]]
+
+
+In this workflow:
+1. The user writes documentation using org-mode in the Rebel-Droid-AP-25 environment.
+2. The user runs the export command to convert org files to Hugo-compatible Markdown.
+3. The user commits and pushes the changes to a Git repository.
+4. This triggers a CI/CD pipeline that generates a static site and deploys it to a web server.
+
+** Customization
+You can customize the Doom Emacs configuration by modifying the `doom.d` directory in the project. Remember to rebuild the Docker image after making changes.
+
+** Contributing
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+** License
+This project is licensed under the MIT License - see the LICENSE file for details.
